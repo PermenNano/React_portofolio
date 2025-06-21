@@ -1,0 +1,44 @@
+  # docker-compose.yml
+  version: '3.8' # Specify the Docker Compose file format version
+
+  services:
+    # Service for your React application served by Nginx
+    frontend:
+      # Build the image using the Dockerfile in the current directory
+      build:
+        context: .
+        dockerfile: Dockerfile # Refers to the Dockerfile we just created
+      container_name: portofolio_web # A user-friendly name for the container
+      # Map port 80 on the host to port 80 in the container, making the app accessible
+      ports:
+        - "80:80"
+      # Connect this service to the custom network
+      networks:
+        - app-network
+
+    # Service for your PostgreSQL database
+    db:
+      # Use the official PostgreSQL 16 Alpine image (lightweight)
+      image: postgres:16-alpine
+      container_name: portfolio_db # A user-friendly name for the database container
+      # Environment variables for PostgreSQL configuration
+      environment:
+        POSTGRES_DB: mydatabase     # The default database name
+        POSTGRES_USER: myuser       # The database user
+        POSTGRES_PASSWORD: mypassword # The password for the database user
+        # Caution: For production, use Docker secrets or environment variable management for credentials
+      # Persist database data using a named volume
+      volumes:
+        - db_data:/var/lib/postgresql/data
+      # Connect this service to the custom network
+      networks:
+        - app-network
+
+  # Define custom networks for inter-service communication
+  networks:
+    app-network:
+      driver: bridge # A bridge network allows containers to communicate with each other
+
+  # Define named volumes for data persistence
+  volumes:
+    db_data: # This volume will store your PostgreSQL database files

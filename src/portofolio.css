@@ -1,0 +1,111 @@
+/* src/portofolio.css */
+@import "tailwindcss"; /* As per your request, using @import syntax */
+
+/* Your custom styles below. These will be processed by Tailwind CSS. */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-image: url('https://cdn.mos.cms.futurecdn.net/HuGGeENt6kGyixe3hT9tnY.jpg'); /* Your image URL */
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: #E5E7EB;
+    line-height: 1.6;
+
+    /* Add an overlay using a pseudo-element for subtle dimming */
+    position: relative;
+    z-index: 0;
+}
+
+/* Pseudo-element for a dark overlay on the background image */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Adjust opacity (0.0 to 1.0) */
+    z-index: -1;
+}
+
+/* Navbar specific styles for hiding/showing */
+.navbar {
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+.navbar-hidden {
+    transform: translateY(-100%);
+}
+.navbar.scrolled {
+    background-color: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+
+/* Content Card Styles - main sections */
+.content-card-bg-white {
+    background-color: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 3rem 0;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+/* Inner Card Styles - Skills and Portfolio items */
+#skills .bg-white,
+#portfolio .bg-gray-50 {
+    background-color: rgba(25, 25, 25, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(50, 50, 50, 0.5);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Add a hover effect to inner cards */
+#skills .bg-white > div > div:hover,
+#portfolio .bg-gray-50 > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Small adjustments for text within cards for better contrast */
+#skills .text-gray-100,
+#portfolio .text-gray-100 {
+    color: #F3F4F6;
+}
+#skills .text-gray-300,
+#portfolio .text-gray-300 {
+    color: #D1D5DB;
+}
+
+/* Improve link readability */
+a {
+    transition: color 0.2s ease-in-out;
+}
+.text-indigo-300:hover {
+    color: #9EC0FF;
+}
+.bg-indigo-600:hover {
+    background-color: #5A67D8;
+}
+
+/* Custom Scrollbar Hide Utility */
+/* For Webkit browsers (Chrome, Safari, Edge - modern versions) */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+    width: 0; /* Ensures no width is taken up by the scrollbar */
+    height: 0; /* Ensures no height is taken up by the scrollbar */
+}
+/* For Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge (legacy) */
+    scrollbar-width: none;  /* Firefox */
+}

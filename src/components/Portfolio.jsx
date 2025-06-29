@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Your prototypes data remains the same
 import myHospitalImage from '../assets/project_photo/MyHospital.png'; 
-import myHotelImage from '../assets/project_photo/MyHotel.png';
+import myHotelImage from '../assets/project_photo/Hotel.png';
 import PeduliDiriImage from '../assets/project_photo/PeduliDiri.png'; 
 import PortofolioVue from '../assets/project_photo/PortofolioVue.png';
 import exportexcel from '../assets/project_photo/export-excel.png'; 

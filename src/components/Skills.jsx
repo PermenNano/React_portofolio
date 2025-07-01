@@ -4,11 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 // --- Data (kept in one file as requested) ---
 const technicalSkills = {
   frontend: [
-    { name: 'Next.js', level: 90 },
+    { name: 'HTML/CSS', level: 97 },
     { name: 'React', level: 95 },
-    { name: 'TypeScript', level: 85 },
+    { name: 'Dart', level: 85 },
     { name: 'JavaScript', level: 95 },
-    { name: 'HTML/CSS', level: 98 },
+    { name: 'Next.js', level: 90 },
+    { name: 'Kotlin', level: 85 },
   ],
   backend: [
     { name: 'Node.js', level: 85 },
@@ -20,14 +21,13 @@ const technicalSkills = {
     { name: 'Git', level: 95 },
     { name: 'Docker', level: 75 },
     { name: 'Figma', level: 85 },
-    // --- ADDED TOOLS ---
     { name: 'VS Code', level: 95 },
     { name: 'Postman', level: 90 },
     { name: 'Android Studio', level: 80 },
   ],
   iot: [
     { name: 'Arduino', level: 85 },
-    { name: 'Raspberry Pi', level: 80 },
+    { name: 'Microcontrollers', level: 80 },
     { name: 'MQTT', level: 70 },
     { name: 'C++', level: 75 },
   ],

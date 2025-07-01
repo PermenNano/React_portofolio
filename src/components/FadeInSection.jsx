@@ -2,20 +2,19 @@ import React from 'react';
 import { useInView } from 'react-intersection-observer';
 
 const FadeInSection = ({ children }) => {
-  // The hook logic remains the same
   const { ref, inView } = useInView({
     threshold: 0.15,
+    triggerOnce: true, // Set to true so it only animates once
   });
 
   return (
     <div
       ref={ref}
-      // --- THIS IS THE ONLY LINE THAT CHANGES ---
-      // We've replaced 'translate-y' with 'translate-x'
+      // UPDATED: Changed to a vertical fade-up animation
       className={`transition-all duration-700 ease-out transform ${
         inView 
-          ? 'opacity-100 translate-x-0' 
-          : 'opacity-0 translate-x-10' // This shifts the element to the right when hidden
+          ? 'opacity-100 translate-y-0' 
+          : 'opacity-0 translate-y-4' // Start shifted down slightly
       }`}
     >
       {children}

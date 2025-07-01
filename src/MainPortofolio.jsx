@@ -17,15 +17,15 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import FadeInSection from './components/FadeInSection';
 import CertificatesPage from './components/Certificates';
+import ProjectDetailPage from './components/ProjectDetailPage'; // <-- 1. IMPORT THE NEW PAGE
 
-function App() {
-  // --- All state and logic remains here ---
+function MainPortofolio() {
+  // --- All state and logic remains the same ---
   const [isHidden, setIsHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const [activeSection, setActiveSection] = useState('');
   const [theme, setTheme] = useState('light');
-
   const myName = 'Anggara';
   const navLinks = [
     { href: '/#hero', label: 'Home' },
@@ -35,7 +35,7 @@ function App() {
     { href: '/#contact', label: 'Contact' },
   ];
 
-  // --- THEME LOGIC (Stays the same) ---
+  // Theme logic remains the same
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -50,22 +50,17 @@ function App() {
     localStorage.setItem('theme', theme);
   }, [theme]);
   const toggleTheme = () => { setTheme(prev => prev === 'light' ? 'dark' : 'light'); };
-
   
-  // --- SCROLL & NAVIGATION EFFECTS ---
-  // THIS IS THE CORRECT, COMPLETE LOGIC THAT WAS MISSING
+  // Scroll and navigation effects logic remains the same
   useEffect(() => {
     const sections = ['hero', 'about', 'skills', 'portfolio', 'contact'];
-    
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       setIsHidden(scrollTop > lastScrollTop && scrollTop > 50);
       setIsScrolled(scrollTop > 50);
       setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
-
       let currentSection = '';
       const triggerPoint = 151;
-
       for (let i = sections.length - 1; i >= 0; i--) {
         const sectionId = sections[i];
         const section = document.getElementById(sectionId);
@@ -76,16 +71,10 @@ function App() {
       }
       setActiveSection(currentSection || 'hero');
     };
-    
-    // Attach listener to the window
     window.addEventListener('scroll', handleScroll);
-    
-    // Cleanup function to remove the listener
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollTop]); // This effect re-runs when lastScrollTop changes
+  }, [lastScrollTop]);
 
-
-  // --- THE RETURN STATEMENT IS NOW A ROUTER ---
   return (
     <BrowserRouter>
       <AnimatedGradientBackground />
@@ -125,9 +114,15 @@ function App() {
           element={<CertificatesPage theme={theme} toggleTheme={toggleTheme} />} 
         />
 
+        {/* --- 2. ADD THE NEW DYNAMIC ROUTE FOR PROJECTS --- */}
+        <Route 
+          path="/project/:projectId" 
+          element={<ProjectDetailPage theme={theme} toggleTheme={toggleTheme} />}
+        />
+
       </Routes>
     </BrowserRouter>
   );
 }
 
-export default App;
+export default MainPortofolio;

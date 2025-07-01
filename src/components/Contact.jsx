@@ -1,24 +1,29 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
+import ReCAPTCHA from "react-google-recaptcha";
 
-// --- DATA (You can customize your details here) ---
+// --- DATA ---
 const contactInfo = { 
-  email: 'hello@gmail.com', 
-  phone: '+1 (123) 456-7890', 
+  email: 'anggarafabiano5@gmail.com', 
   location: 'Depok, West Java, Indonesia' 
 };
 
 const socialLinks = [
-  { icon: 'fab fa-linkedin-in', href: `https://www.linkedin.com/in/your-linkedin-username` },
-  { icon: 'fab fa-github', href: `https://github.com/your-github-username` },
-  { icon: 'fab fa-twitter', href: '#' },
+  { icon: 'fab fa-linkedin-in', href: 'https://www.linkedin.com/in/your-linkedin-username' },
+  { icon: 'fab fa-github', href: 'https://github.com/PermenNano' },
 ];
 
 const Contact = () => {
   const form = useRef();
+  const recaptchaRef = useRef();
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSending, setIsSending] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+
+  const handleCaptchaChange = (value) => {
+    setIsVerified(!!value);
+  };
 
   const handleFormChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -27,25 +32,31 @@ const Contact = () => {
 
   const handleFormSubmit = useCallback((e) => {
     e.preventDefault();
+    if (!isVerified) {
+      alert('Please complete the CAPTCHA to verify you are not a robot.');
+      return;
+    }
     setIsSending(true);
 
     emailjs.send(
-        'service_90xp2lf',
+        'service_90xp2lf', 
         'template_jtdclkp',
-        { from_name: formData.name, from_email: formData.email, message: formData.message },
+        { from_name: formData.name, from_email: formData.email, message: formData.message }, 
         'mILxhvMUMYIyj23EC'
     )
     .then(() => {
         setShowSuccess(true); 
         setFormData({ name: '', email: '', message: '' });
+        recaptchaRef.current.reset();
+        setIsVerified(false);
     }, (error) => {
         console.log('FAILED...', error);
-        alert('Failed to send the message, please try again.');
+        alert('Failed to send the message. Please try again.');
     })
     .finally(() => {
         setIsSending(false);
     });
-  }, [formData]);
+  }, [formData, isVerified]);
 
   useEffect(() => {
     if (showSuccess) {
@@ -54,11 +65,10 @@ const Contact = () => {
     }
   }, [showSuccess]);
 
-
   return (
     <section id="contact" className="py-16 sm:py-24 bg-gray-50 dark:bg-gray-900/50">
       
-      {/* --- Success Modal --- */}
+      {/* Success Modal */}
       <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-300 ease-in-out ${showSuccess ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         <div className={`relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full p-8 sm:p-12 text-center transform transition-all duration-300 ease-in-out ${showSuccess ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
@@ -73,51 +83,59 @@ const Contact = () => {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
-            Get In <span className="text-purple-500 dark:text-purple-400">Touch</span>
-          </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-400">
+        <h2 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+  Get In{' '}
+  <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-indigo-500">
+    Touch
+  </span>
+</h2>
+          <p className="mt-4 max-w-2xl mx-auto font-bold text-gray-800 dark:text-white">
             Have a project in mind or want to collaborate? I'd love to hear from you.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* --- Contact Info Side --- */}
+          {/* Contact Info Side */}
           <div className="space-y-8">
             <InfoItem icon="fas fa-envelope" label="Email" value={contactInfo.email} href={`mailto:${contactInfo.email}`} />
-            <InfoItem icon="fas fa-phone" label="Phone" value={contactInfo.phone} href={`tel:${contactInfo.phone}`} />
             <InfoItem icon="fas fa-map-marker-alt" label="Location" value={contactInfo.location} />
-
             <div className="pt-8 border-t border-gray-200 dark:border-gray-700">
-                <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Connect With Me</h3>
-                <div className="flex space-x-6">
-                    {socialLinks.map(social => (
-                        <a key={social.icon} href={social.href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-purple-500 dark:hover:text-purple-400 transition-transform duration-300 hover:scale-110 text-3xl">
-                            <i className={social.icon}></i>
-                        </a>
-                    ))}
-                </div>
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Connect With Me</h3>
+              <div className="flex space-x-6">
+                {socialLinks.map(social => (
+                  <a key={social.icon} href={social.href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-purple-500 dark:hover:text-purple-400 transition-transform duration-300 hover:scale-110 text-3xl">
+                    <i className={social.icon}></i>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* --- Form Side --- */}
-          {/* UPDATED THIS LINE for new background color and border radius */}
+          {/* Form Side */}
           <div className="bg-gray-100 dark:bg-gray-800 p-8 rounded-2xl shadow-lg">
             <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Send a Message</h3>
             <form ref={form} onSubmit={handleFormSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Name</label>
-                <input type="text" id="name" name="name" value={formData.name} onChange={handleFormChange} required className="form-input" placeholder="e.g., Jane Doe" />
+                <input type="text" id="name" name="name" value={formData.name} onChange={handleFormChange} required className="form-input" placeholder="Fill your name here" />
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Email</label>
-                <input type="email" id="email" name="email" value={formData.email} onChange={handleFormChange} required className="form-input" placeholder="e.g., jane.doe@example.com" />
+                <input type="email" id="email" name="email" value={formData.email} onChange={handleFormChange} required className="form-input" placeholder="Fill your Email here" />
               </div>
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Message</label>
                 <textarea id="message" name="message" rows="5" value={formData.message} onChange={handleFormChange} required className="form-input" placeholder="Your message here..."></textarea>
               </div>
-              <button type="submit" disabled={isSending} className="w-full text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-bold rounded-lg text-md px-5 py-3 text-center flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-300">
+              <div className="flex justify-center md:justify-start">
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey="6LcBBXQrAAAAAJ9T2Ht6HqGQn9Mr9FnlTzg7NLGf"
+                  onChange={handleCaptchaChange}
+                  theme="dark"
+                />
+              </div>
+              <button type="submit" disabled={isSending || !isVerified} className="w-full text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 font-bold rounded-lg text-md px-5 py-3 text-center flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
                 {isSending ? 'Sending...' : 'Send Message'}
                 <i className="fas fa-paper-plane ml-2"></i>
               </button>
@@ -129,17 +147,16 @@ const Contact = () => {
   );
 };
 
-// --- A more attractive InfoItem sub-component ---
 const InfoItem = ({ icon, label, value, href }) => (
-    <a href={href || '#'} target={href ? '_blank' : '_self'} rel="noopener noreferrer" className="flex items-center p-4 rounded-lg transition-colors duration-300 hover:bg-gray-100 dark:hover:bg-gray-800/50 group">
-        <div className="flex-shrink-0 w-12 h-12 bg-purple-100 dark:bg-gray-700 text-purple-600 dark:text-purple-400 rounded-full flex items-center justify-center text-xl transition-transform duration-300 group-hover:scale-110">
-            <i className={icon}></i>
-        </div>
-        <div className="ml-4">
-            <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">{label}</p>
-            <p className="text-lg font-bold text-gray-800 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">{value}</p>
-        </div>
-    </a>
+  <a href={href || '#'} target={href ? '_blank' : '_self'} rel="noopener noreferrer" className="flex items-center p-4 rounded-lg transition-colors duration-300 hover:bg-gray-100 dark:hover:bg-gray-800/50 group">
+    <div className="flex-shrink-0 w-12 h-12 bg-purple-100 dark:bg-gray-700 text-purple-600 dark:text-purple-400 rounded-full flex items-center justify-center text-xl transition-transform duration-300 group-hover:scale-110">
+      <i className={icon}></i>
+    </div>
+    <div className="ml-4">
+      <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">{label}</p>
+      <p className="text-lg font-bold text-gray-800 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">{value}</p>
+    </div>
+  </a>
 );
 
 export default Contact;

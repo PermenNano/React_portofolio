@@ -93,6 +93,9 @@ function MainPortofolio() {
                 toggleTheme={toggleTheme}
               />
               <main className="relative z-10">
+              <link rel="icon" type="image/png" href="main.png" />
+              
+              <title>Web Portofolio</title>
                 <Hero myName={myName} />
                 <div className="bg-white dark:bg-gray-900">
                   <div className="px-4 md:px-10 py-10">

@@ -10,7 +10,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import AnimatedGradientBackground from './components/AnimatedGradientBackground';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import About from './components/About';
+import About from './components/about';
 import Skills from './components/Skills';
 import Portfolio from './components/Portfolio';
 import Contact from './components/Contact';

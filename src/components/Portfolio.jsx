@@ -1,14 +1,12 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-// Your prototypes data remains the same
+// Your prototypes data and image imports remain the same
 import myHospitalImage from '../assets/project_photo/MyHospital.png'; 
 import myHotelImage from '../assets/project_photo/Hotel.png';
 import PeduliDiriImage from '../assets/project_photo/PeduliDiri.png'; 
 import PortofolioVue from '../assets/project_photo/PortofolioVue.png';
 import exportexcel from '../assets/project_photo/export-excel.png'; 
 import brinproject from '../assets/project_photo/brin_project.png'; 
-
 
 const prototypes = [
   { id: 1, image: myHospitalImage, title: 'MyHospital', description: 'Lorem ipsum dolor sit amet...', link: '#', technologies: ['HTML', 'CSS3'] },
@@ -21,13 +19,12 @@ const prototypes = [
 ];
 
 const Portfolio = () => {
-  const navigate = useNavigate();
+  // We can remove useNavigate if it's not used elsewhere in this component
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const scrollContainerRef = useRef(null);
 
-  // --- LOGIC RESTORED ---
-  // This function checks the scroll position to show/hide the arrow buttons
+  // --- Logic for scroll buttons (unchanged) ---
   const checkScrollPosition = useCallback(() => {
     const container = scrollContainerRef.current;
     if (container) {
@@ -37,13 +34,12 @@ const Portfolio = () => {
     }
   }, []);
   
-  // This effect attaches event listeners to check the scroll position automatically
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
       container.addEventListener('scroll', checkScrollPosition);
       window.addEventListener('resize', checkScrollPosition);
-      checkScrollPosition(); // Initial check on load
+      checkScrollPosition();
       return () => {
         if(container) {
             container.removeEventListener('scroll', checkScrollPosition);
@@ -53,7 +49,6 @@ const Portfolio = () => {
     }
   }, [checkScrollPosition]);
 
-  // These functions handle the button clicks
   const scrollLeft = useCallback(() => scrollContainerRef.current?.scrollBy({ left: -350, behavior: 'smooth' }), []);
   const scrollRight = useCallback(() => scrollContainerRef.current?.scrollBy({ left: 350, behavior: 'smooth' }), []);
 
@@ -66,7 +61,12 @@ const Portfolio = () => {
         <h3 className="text-3xl font-bold mb-8 text-left text-gray-700 dark:text-gray-300 border-b-2 border-purple-500 pb-2">
           Projects
         </h3>
-        <div ref={scrollContainerRef} className="flex overflow-x-auto space-x-6 pb-4 scrollbar-hide">
+        
+        {/* --- THIS LINE IS UPDATED TO HIDE THE SCROLLBAR --- */}
+        <div 
+          ref={scrollContainerRef} 
+          className="flex overflow-x-auto space-x-6 pb-4 scrollbar-hide"
+        >
           {prototypes.map((prototype) => (
             <div key={prototype.id} className="min-w-[320px] md:min-w-[350px] bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out flex flex-col h-full">
               <img src={prototype.image} alt={prototype.title} className="w-full h-48 object-cover border-b border-gray-200 dark:border-gray-700 flex-shrink-0" />
@@ -87,19 +87,6 @@ const Portfolio = () => {
         </div>
         <button onClick={scrollLeft} className={`absolute left-[-20px] top-1/2 -translate-y-1/2 bg-white/80 dark:bg-gray-800/80 p-3 rounded-full shadow-lg hover:bg-white dark:hover:bg-gray-800 transition-all duration-300 z-10 focus:outline-none md:block ${ canScrollLeft ? 'opacity-100' : 'opacity-0 pointer-events-none' }`} aria-label="Scroll Left"><i className="fas fa-chevron-left text-gray-800 dark:text-white"></i></button>
         <button onClick={scrollRight} className={`absolute right-[-20px] top-1/2 -translate-y-1/2 bg-white/80 dark:bg-gray-800/80 p-3 rounded-full shadow-lg hover:bg-white dark:hover:bg-gray-800 transition-all duration-300 z-10 focus:outline-none md:block ${ canScrollRight ? 'opacity-100' : 'opacity-0 pointer-events-none' }`} aria-label="Scroll Right"><i className="fas fa-chevron-right text-gray-800 dark:text-white"></i></button>
-      </div>
-
-      <div className="flex justify-center mt-12">
-        <button 
-          onClick={() => navigate('/certificates')}
-          className="w-full max-w-md h-64 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col items-center justify-center text-left p-6"
-        >
-          <div className="text-white text-4xl mb-4">
-            <i className="fas fa-certificate"></i>
-          </div>
-          <h3 className="text-white text-2xl font-bold mb-2">View All Certificates</h3>
-          <p className="text-white/80 text-sm">Click to explore my professional certifications</p>
-        </button>
       </div>
     </section>
   );

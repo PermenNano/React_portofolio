@@ -92,6 +92,10 @@ function MainPortofolio() {
               <main className="relative z-10">
                 <Hero myName={myName} />
                 <div className="bg-white dark:bg-gray-900">
+                  <title>
+                    Portfolio
+                  </title>
+                  <link rel="icon" type="image/png" href="/main.png" /> 
                   <div className="px-4 md:px-10 py-10">
                     <FadeInSection><About profilePic={profilePic} /></FadeInSection>
                     <FadeInSection><Skills /></FadeInSection>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// --- Data (kept in one file as requested) ---
 const technicalSkills = {
   frontend: [
     { name: 'HTML/CSS', level: 97 },
@@ -40,7 +39,6 @@ const softSkills = [
   { name: 'Adaptability', icon: 'fas fa-sync-alt', description: 'Quickly learning and applying new technologies to meet project requirements.' },
 ];
 
-// --- Helper component for the animated skill bars ---
 const SkillBar = ({ name, level }) => {
   const variants = {
     initial: { width: 0 },
@@ -50,14 +48,14 @@ const SkillBar = ({ name, level }) => {
     }
   };
   return (
-    <div className="mb-4 px-4">
-      <div className="flex justify-between items-center mb-1">
-        <span className="font-semibold text-gray-700 dark:text-gray-200">{name}</span>
-        <span className="text-sm font-medium text-purple-600 dark:text-purple-400">{level}%</span>
+    <div className="mb-5 px-4">
+      <div className="flex justify-between items-center mb-2">
+        <span className="font-semibold text-lg text-gray-700 dark:text-gray-200">{name}</span>
+        <span className="text-base font-medium text-purple-600 dark:text-purple-400">{level}%</span>
       </div>
-      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
         <motion.div
-          className="bg-gradient-to-r from-purple-500 to-indigo-500 h-2.5 rounded-full"
+          className="bg-gradient-to-r from-purple-500 to-indigo-500 h-3 rounded-full"
           variants={variants}
           initial="initial"
           whileInView="animate"
@@ -68,17 +66,16 @@ const SkillBar = ({ name, level }) => {
   );
 };
 
-// --- Accordion Item Component ---
 const AccordionItem = ({ category, skills, isOpen, onClick }) => {
     return (
         <div className="border-b border-gray-200 dark:border-gray-700">
             <button
                 onClick={onClick}
-                className="w-full flex justify-between items-center p-4 text-left text-xl font-bold text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-colors"
+                className="w-full flex justify-between items-center p-5 text-left text-2xl font-bold text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-colors"
             >
                 <span className="capitalize">{category}</span>
                 <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                    <i className="fas fa-chevron-down text-sm"></i>
+                    <i className="fas fa-chevron-down text-base"></i>
                 </motion.div>
             </button>
             <AnimatePresence>
@@ -113,18 +110,17 @@ const Skills = () => {
     <section id="skills" className="py-20 sm:py-28">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+          <h2 className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
             My Skills & <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-indigo-500">Abilities</span>
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-400">
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-600 dark:text-gray-400">
             A look at my technical proficiency and professional strengths.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* --- LEFT COLUMN: HARD SKILLS (with accordion) --- */}
           <div className="bg-white dark:bg-gray-800/50 rounded-xl shadow-lg">
-            <h3 className="text-3xl font-bold text-center text-gray-800 dark:text-white py-6">Technical Skills</h3>
+            <h3 className="text-4xl font-bold text-center text-gray-800 dark:text-white py-6">Technical Skills</h3>
             <div className="border-t border-gray-200 dark:border-gray-700">
               {Object.entries(technicalSkills).map(([key, skills]) => (
                 <AccordionItem
@@ -138,18 +134,17 @@ const Skills = () => {
             </div>
           </div>
 
-          {/* --- RIGHT COLUMN: SOFT SKILLS --- */}
           <div className="space-y-8">
-            <h3 className="text-3xl font-bold text-center text-gray-800 dark:text-white">Soft Skills</h3>
+            <h3 className="text-4xl font-bold text-center text-gray-800 dark:text-white">Soft Skills</h3>
             {softSkills.map((skill) => (
               <div key={skill.name} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:border-purple-500 border-l-4 border-transparent">
                 <div className="flex items-center">
-                  <div className="text-purple-500 dark:text-purple-400 text-3xl mr-5 flex-shrink-0">
+                  <div className="text-purple-500 dark:text-purple-400 text-4xl mr-5 flex-shrink-0">
                     <i className={skill.icon}></i>
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-1">{skill.name}</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">{skill.description}</p>
+                    <h4 className="text-2xl font-bold text-gray-800 dark:text-white mb-1">{skill.name}</h4>
+                    <p className="text-base text-gray-600 dark:text-gray-400">{skill.description}</p>
                   </div>
                 </div>
               </div>

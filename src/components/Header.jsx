@@ -27,7 +27,6 @@ const Header = ({ isScrolled, myName, navLinks, activeSection }) => {
               {navLinks.map((link) => (
                 <li key={link.href}>
                   {link.label === 'Contact' ? (
-                    // --- THIS IS THE UPDATED STYLING FOR THE CONTACT BUTTON ---
                     <a 
                       href={link.href}
                       className="flex items-center gap-2 text-sm font-semibold px-5 py-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg"
@@ -36,7 +35,6 @@ const Header = ({ isScrolled, myName, navLinks, activeSection }) => {
                       <i className="fas fa-arrow-up-right-from-square text-xs"></i>
                     </a>
                   ) : (
-                    // Regular nav links
                     <a 
                       href={link.href}
                       className={`pb-1 transition duration-300 ease-in-out hover:text-purple-500 dark:hover:text-purple-400 hover:border-purple-500 dark:hover:border-purple-400 ${

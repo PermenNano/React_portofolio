@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-// Asset and Style Imports
 import profilePic from './assets/kucing.jpeg';
 import './portofolio.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-// Component Imports
 import AnimatedGradientBackground from './components/AnimatedGradientBackground';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -17,10 +15,9 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import FadeInSection from './components/FadeInSection';
 import CertificatesPage from './components/Certificates';
-import ProjectDetailPage from './components/ProjectDetailPage'; // <-- 1. IMPORT THE NEW PAGE
+import ProjectDetailPage from './components/ProjectDetailPage';
 
 function MainPortofolio() {
-  // --- All state and logic remains the same ---
   const [isHidden, setIsHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
@@ -35,12 +32,12 @@ function MainPortofolio() {
     { href: '/#contact', label: 'Contact' },
   ];
 
-  // Theme logic remains the same
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     setTheme(savedTheme || (systemPrefersDark ? 'dark' : 'light'));
   }, []);
+
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -49,9 +46,11 @@ function MainPortofolio() {
     }
     localStorage.setItem('theme', theme);
   }, [theme]);
-  const toggleTheme = () => { setTheme(prev => prev === 'light' ? 'dark' : 'light'); };
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
   
-  // Scroll and navigation effects logic remains the same
   useEffect(() => {
     const sections = ['hero', 'about', 'skills', 'portfolio', 'contact'];
     const handleScroll = () => {
@@ -79,8 +78,6 @@ function MainPortofolio() {
     <BrowserRouter>
       <AnimatedGradientBackground />
       <Routes>
-        
-        {/* ROUTE 1: The Main Page ("/") */}
         <Route path="/" element={
             <>
               <Header 
@@ -93,9 +90,6 @@ function MainPortofolio() {
                 toggleTheme={toggleTheme}
               />
               <main className="relative z-10">
-              <link rel="icon" type="image/png" href="main.png" />
-              
-              <title>Web Portofolio</title>
                 <Hero myName={myName} />
                 <div className="bg-white dark:bg-gray-900">
                   <div className="px-4 md:px-10 py-10">
@@ -110,19 +104,14 @@ function MainPortofolio() {
             </>
           } 
         />
-
-        {/* ROUTE 2: The Certificates Page ("/certificates") */}
         <Route 
           path="/certificates" 
           element={<CertificatesPage theme={theme} toggleTheme={toggleTheme} />} 
         />
-
-        {/* --- 2. ADD THE NEW DYNAMIC ROUTE FOR PROJECTS --- */}
         <Route 
           path="/project/:projectId" 
           element={<ProjectDetailPage theme={theme} toggleTheme={toggleTheme} />}
         />
-
       </Routes>
     </BrowserRouter>
   );

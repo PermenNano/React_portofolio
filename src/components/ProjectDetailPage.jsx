@@ -27,13 +27,13 @@ const ProjectDetailPage = ({ theme, toggleTheme }) => {
       <main className="max-w-4xl mx-auto px-4 py-16 sm:px-6 sm:py-24">
         
         <div className="mb-8">
-            <button 
-              onClick={() => navigate(-1)}
+            <Link 
+              to="/"
               className="text-lg font-semibold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-2"
             >
               <i className="fas fa-arrow-left"></i>
-              Go Back
-            </button>
+              Back to Portfolio
+            </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
@@ -51,9 +51,7 @@ const ProjectDetailPage = ({ theme, toggleTheme }) => {
             </div>
             <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed mb-8 flex-grow">{project.description}</p>
             
-            {/* --- UPDATED BUTTONS SECTION --- */}
             <div className="flex flex-col sm:flex-row gap-4 mt-auto">
-              {/* "Visit Live Site" button appears if project.link exists */}
               {project.link && project.link !== '#' && (
                  <a 
                   href={project.link} 
@@ -64,7 +62,6 @@ const ProjectDetailPage = ({ theme, toggleTheme }) => {
                   Visit Live Site
                 </a>
               )}
-              {/* "Repository" button appears if project.repoUrl exists */}
               {project.repoUrl && project.repoUrl !== '#' && (
                 <a 
                   href={project.repoUrl} 
@@ -81,7 +78,6 @@ const ProjectDetailPage = ({ theme, toggleTheme }) => {
           </div>
         </div>
 
-        {/* Project Navigation Section */}
         <div className="mt-20 pt-10 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
           <div>
             {previousProject && (

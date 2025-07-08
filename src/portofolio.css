@@ -8,20 +8,15 @@
    @import "tailwindcss";
    
    
-   /* ==========================================================================
-      2. Global, Root, and Custom Scrollbar Styles
-      ========================================================================== */
    
    html {
      scroll-behavior: smooth;
      transition: background-color 0.3s ease, color 0.3s ease;
      
-     /* For Firefox */
      scrollbar-width: thin;
-     scrollbar-color: #9333ea #1E293B; /* thumb color, track color */
+     scrollbar-color: #9333ea #1E293B; 
    }
    
-   /* For WebKit Browsers (Chrome, Safari, Edge) */
    ::-webkit-scrollbar {
      width: 8px;
      height: 8px;
@@ -48,12 +43,8 @@
    }
    
    
-   /* ==========================================================================
-      3. Custom Component Styles
-      ========================================================================== */
    
    @layer components {
-     /* For the contact form inputs */
      .form-input {
        @apply w-full rounded-lg border p-3;
        @apply bg-gray-200 dark:bg-gray-700;
@@ -64,10 +55,7 @@
      }
    }
    
-   
-   /* ==========================================================================
-      4. Dark Mode Setup
-      ========================================================================== */
+  
    
    .dark {
      color-scheme: dark;
@@ -83,17 +71,12 @@
    }
    
    
-   /* ==========================================================================
-      5. Custom Animation Classes & Helper Classes
-      ========================================================================== */
-   
-   /* This utility class hides scrollbars on any element it's applied to */
    .scrollbar-hide::-webkit-scrollbar {
      display: none;
    }
    .scrollbar-hide {
-     -ms-overflow-style: none;  /* IE and Edge */
-     scrollbar-width: none;  /* Firefox */
+     -ms-overflow-style: none; 
+     scrollbar-width: none; 
    }
    
    .animate-gradient {
@@ -107,10 +90,6 @@
      animation: rotate 2s linear infinite;
    }
    
-   
-   /* ==========================================================================
-      6. Keyframe Definitions
-      ========================================================================== */
    
    @keyframes animated-gradient {
      0% { background-position: 0% 50%; }

@@ -2,7 +2,6 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import ReCAPTCHA from "react-google-recaptcha";
 
-// --- DATA ---
 const contactInfo = { 
   email: 'anggarafabiano5@gmail.com', 
   location: 'Depok, West Java, Indonesia' 
@@ -68,7 +67,6 @@ const Contact = () => {
   return (
     <section id="contact" className="py-16 sm:py-24 bg-gray-50 dark:bg-gray-900/50">
       
-      {/* Success Modal */}
       <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-300 ease-in-out ${showSuccess ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         <div className={`relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full p-8 sm:p-12 text-center transform transition-all duration-300 ease-in-out ${showSuccess ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
@@ -95,7 +93,6 @@ const Contact = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Info Side */}
           <div className="space-y-8">
             <InfoItem icon="fas fa-envelope" label="Email" value={contactInfo.email} href={`mailto:${contactInfo.email}`} />
             <InfoItem icon="fas fa-map-marker-alt" label="Location" value={contactInfo.location} />
@@ -111,7 +108,6 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Form Side */}
           <div className="bg-gray-100 dark:bg-gray-800 p-8 rounded-2xl shadow-lg">
             <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Send a Message</h3>
             <form ref={form} onSubmit={handleFormSubmit} className="space-y-6">
